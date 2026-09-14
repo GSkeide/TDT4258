@@ -19,12 +19,14 @@ check_input:
 count_loop:
     ldrb r2, [r0, r1]    // load byte at input[r1] into r2
     cmp r2, #0           // is it the null terminator?
-    beq check_palindrom       // null terminator means we are done counting
+    beq count_done       // null terminator means we are done counting
     add r1, r1, #1       // increment counter
     b count_loop         // loop
 	
 	
-	
+	count_done:
+    cmp r1, #4
+    blt is_no_palindrom  // If length < 4
 	
 check_palindrom:
     mov r3, #0           // i = 0
@@ -105,7 +107,6 @@ is_no_palindrom:
     ldr r0, =mismatch         // load address of failure string
     b print_string        // call UART print routine
 	
-	
 
 	
 	print_string:
@@ -133,7 +134,19 @@ b .
 // You can modify the string during development, however you
 // are not allowed to change the name 'input'!
 input: .asciz "Grav ned den varg"
+
+//input: .asciz "level"
 //input: .asciz "abc?dc%a"
+//input: .asciz "8448"
+//input: .asciz "step on no pets"
+//input: .asciz "My gym"
+//input: .asciz "Was it a car or a cat I saw"
+//input: .asciz "Palindrome"
+//input: .asciz "First level"
+//input: .asciz "KayAk"
+//input: .asciz "A9c9a"
+
+
 detected: .asciz "Palindrome detected "
 mismatch: .asciz "Not a palindrome "
 .end
